@@ -1,0 +1,101 @@
+<div class="row justify-content-center align-items-center">
+  <div class="col col-md-6 col-lg-5">
+    <div class="custom-card">
+      <h3 class="text-center">Register</h3>
+      <form (ngSubmit)="submitForm()" [formGroup]="registerForm" novalidate>
+        <div class="form-group" [ngClass]="{
+                'has-success': registerForm.controls.username.valid && registerForm.controls.username.dirty,
+                'has-danger': registerForm.controls.username.invalid && registerForm.controls.username.dirty
+              }">
+          <label for="username" class="form-control-label">Username*</label>
+          <input type="text" id="username" class="form-control" formControlName="username">
+          <small class="form-control-feedback"
+                 *ngIf="registerForm.controls.username.valid && registerForm.controls.username.dirty">
+            Correct!
+          </small>
+          <small class="form-control-feedback" *ngIf="formErrors.username">{{ formErrors.username }}</small>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+                'has-success': registerForm.controls.password.valid && registerForm.controls.password.dirty,
+                'has-danger': registerForm.controls.password.invalid && registerForm.controls.password.dirty
+              }">
+          <label for="password" class="form-control-label">Password*</label>
+          <input type="password" id="password" class="form-control" formControlName="password" maxlength="36">
+          <small class="form-control-feedback"
+                 *ngIf="registerForm.controls.password.valid && registerForm.controls.password.dirty">
+            Correct!
+          </small>
+          <small class="form-control-feedback" *ngIf="formErrors.password">{{ formErrors.password }}</small>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+                'has-success': registerForm.controls.passwordConfirm.valid && registerForm.controls.passwordConfirm.dirty,
+                'has-danger': registerForm.controls.passwordConfirm.invalid && registerForm.controls.passwordConfirm.dirty
+              }">
+          <label for="passwordConfirm" class="form-control-label">Confirm password*</label>
+          <input type="password" id="passwordConfirm" class="form-control" formControlName="passwordConfirm">
+          <small class="form-control-feedback"
+                 *ngIf="registerForm.controls.passwordConfirm.valid && registerForm.controls.passwordConfirm.dirty">
+            Correct!
+          </small>
+          <small class="form-control-feedback" *ngIf="formErrors.passwordConfirm">{{ formErrors.passwordConfirm }}</small>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+                'has-success': registerForm.controls.employment.valid && registerForm.controls.employment.dirty,
+                'has-danger': registerForm.controls.employment.invalid && registerForm.controls.employment.touched
+              }">
+          <label for="employment" class="form-control-label">Employment status*</label>
+          <select id="employment" class="form-control" formControlName="employment">
+            <option *ngFor="let opt of options.employment" [value]="opt.key">{{opt.value}}</option>
+          </select>
+          <small class="form-control-feedback"
+                 *ngIf="registerForm.controls.employment.invalid && registerForm.controls.employment.touched">
+            This field is required
+          </small>
+        </div>
+
+        <div class="form-group" *ngIf="showEmployedPlace" [ngClass]="{
+                'has-success': registerForm.controls.employedPlace.valid && registerForm.controls.employedPlace.dirty,
+                'has-danger': registerForm.controls.employedPlace.invalid && registerForm.controls.employedPlace.dirty
+              }">
+          <label for="employedPlace" class="form-control-label">Where are you employed?*</label>
+          <input type="text" id="employedPlace" class="form-control"
+                 formControlName="employedPlace">
+          <small class="form-control-feedback" *ngIf="formErrors.employedPlace">{{ formErrors.employedPlace }}</small>
+        </div>
+
+        <div class="form-group">
+          <label for="annualIncome" class="form-control-label">Annual income</label>
+          <select id="annualIncome" class="form-control" formControlName="annualIncome">
+            <option *ngFor="let opt of options.annualIncome" [value]="opt.key">{{opt.value}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="favouriteSport" class="form-control-label">Favourite sport</label>
+          <input type="text" id="favouriteSport" class="form-control" formControlName="favouriteSport">
+        </div>
+
+        <div class="form-group" [ngClass]="{
+                'has-success': registerForm.controls.termsAcceptance.value && registerForm.controls.termsAcceptance.dirty,
+                'has-danger': !registerForm.controls.termsAcceptance.value && registerForm.controls.termsAcceptance.dirty
+              }">
+          <label for="termsAcceptance" class="form-control-label">I accept terms and conditions*</label>
+          <input type="checkbox" id="termsAcceptance" class="form-control" formControlName="termsAcceptance">
+          <small class="form-control-feedback"
+                 *ngIf="!registerForm.controls.termsAcceptance.value && registerForm.controls.termsAcceptance.dirty">
+            This acceptance is required
+          </small>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-block"
+                [disabled]="registerForm.invalid || !registerForm.controls.termsAcceptance.value">Continue to Summary</button>
+        <button type="button" class="btn btn-danger btn-block" (click)="goToLogin()">Login To Summary</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<p>Form value: {{ registerForm.value | json }}</p>

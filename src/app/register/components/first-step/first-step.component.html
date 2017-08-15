@@ -1,0 +1,131 @@
+<div class="row justify-content-center align-items-center">
+  <div class="col col-md-6 col-lg-5">
+    <div class="custom-card">
+      <h3 class="text-center">Register</h3>
+      <form (ngSubmit)="submitForm()" [formGroup]="registerForm" novalidate>
+        <div class="form-group" [ngClass]="{
+                'has-success': registerForm.controls.name.valid && registerForm.controls.name.dirty,
+                'has-danger': registerForm.controls.name.invalid && registerForm.controls.name.dirty
+              }">
+          <label for="name" class="form-control-label">Name*</label>
+          <input type="text" id="name" class="form-control" formControlName="name">
+          <small class="form-control-feedback"
+                 *ngIf="registerForm.controls.name.valid && registerForm.controls.name.dirty">
+            Correct!
+          </small>
+          <small class="form-control-feedback" *ngIf="formErrors.name">{{ formErrors.name }}</small>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+                'has-success': registerForm.controls.surname.valid && registerForm.controls.surname.dirty,
+                'has-danger': registerForm.controls.surname.invalid && registerForm.controls.surname.dirty
+              }">
+          <label for="surname" class="form-control-label">Surname*</label>
+          <input type="text" id="surname" class="form-control" formControlName="surname">
+          <small class="form-control-feedback"
+                 *ngIf="registerForm.controls.surname.valid && registerForm.controls.surname.dirty">
+            Correct!
+          </small>
+          <small class="form-control-feedback" *ngIf="formErrors.surname">
+            {{ formErrors.surname }}
+          </small>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+                'has-success': registerForm.controls.dateOfBirth.valid && registerForm.controls.dateOfBirth.dirty,
+                'has-danger': registerForm.controls.dateOfBirth.invalid && registerForm.controls.dateOfBirth.dirty
+              }">
+          <label for="dateOfBirth" class="form-control-label">Date of birth*</label>
+          <input type="text" id="dateOfBirth" class="form-control" placeholder="dd/mm/yyyy"
+                 formControlName="dateOfBirth">
+          <small class="form-control-feedback"
+                 *ngIf="registerForm.controls.dateOfBirth.valid && registerForm.controls.dateOfBirth.dirty">
+            Correct!
+          </small>
+          <small class="form-control-feedback" *ngIf="formErrors.dateOfBirth">
+            {{ formErrors.dateOfBirth }}
+          </small>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+                'has-success': registerForm.controls.phone.valid && registerForm.controls.phone.dirty,
+                'has-danger': registerForm.controls.phone.invalid && registerForm.controls.phone.dirty
+              }">
+          <label for="phone" class="form-control-label">Phone*</label>
+          <input type="tel" id="phone" class="form-control"
+                 formControlName="phone">
+          <small class="form-control-feedback"
+                 *ngIf="registerForm.controls.phone.valid && registerForm.controls.phone.dirty">
+            Correct!
+          </small>
+          <small class="form-control-feedback" *ngIf="formErrors.phone">
+            {{ formErrors.phone }}
+          </small>
+        </div>
+
+        <div class="form-group" formArrayName="addresses">
+          <label>Addresses</label>
+          <div *ngFor="let address of registerForm.controls.addresses.controls; let i = index;">
+            <div class="card mb-3">
+              <div class="card-header bg-primary text-white">
+                Address #{{i + 1}}
+                <button type="button" class="close" aria-label="Close"
+                        *ngIf="registerForm.controls.addresses.controls.length > 1"
+                        (click)="removeAddress(i)">
+                  <span aria-hidden="true" class="text-white">&times;</span>
+                </button>
+              </div>
+              <div class="card-block" [formGroupName]="i">
+                <div class="form-group" [ngClass]="{
+                  'has-success': address.controls.country.valid && address.controls.country.dirty,
+                  'has-danger': address.controls.country.invalid && address.controls.country.dirty
+                }">
+                  <label for="country" class="form-control-label">Country*</label>
+                  <input type="text" id="country" class="form-control" formControlName="country">
+                  <small class="form-control-feedback"
+                         *ngIf="address.controls.country.valid && address.controls.country.dirty">
+                    Correct!
+                  </small>
+                  <small class="form-control-feedback"
+                         *ngIf="formErrors.addresses[i].country">
+                    {{formErrors.addresses[i].country}}
+                  </small>
+                </div>
+                <div class="form-group" [ngClass]="{
+                  'has-success': address.controls.city.valid && address.controls.city.dirty,
+                  'has-danger': address.controls.city.invalid && address.controls.city.dirty
+                }">
+                  <label for="city" class="form-control-label">City*</label>
+                  <input type="text" id="city" class="form-control" formControlName="city">
+                  <small class="form-control-feedback"
+                         *ngIf="address.controls.city.valid && address.controls.city.dirty">
+                    Correct!
+                  </small>
+                  <small class="form-control-feedback"
+                         *ngIf="formErrors.addresses[i].city">
+                    {{formErrors.addresses[i].city}}
+                  </small>
+                </div>
+                <div class="form-group">
+                  <label for="street" class="form-control-label">Street</label>
+                  <input type="text" id="street" class="form-control" formControlName="street">
+                  <small class="form-control-feedback"
+                         *ngIf="formErrors.addresses[i].street">
+                    {{formErrors.addresses[i].street}}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-row-reverse mb-3">
+          <button type="button" class="btn btn-primary" (click)="addAddress()">+ Address</button>
+        </div>
+        <button type="submit" class="btn btn-success btn-block" [disabled]="registerForm.invalid">Continue</button>
+        <button type="button" class="btn btn-danger btn-block" (click)="goToLogin()">Login To Summary</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<p>Form value: {{ registerForm.value | json }}</p>

@@ -1,0 +1,36 @@
+<div class="row justify-content-center align-items-center full-height">
+  <div class="col col-md-6 col-lg-5">
+    <div class="custom-card">
+      <h3 class="text-center">Login</h3>
+      <form (ngSubmit)="submitForm()" #loginForm="ngForm">
+        <div class="form-group"
+             [ngClass]="{
+                'has-success': username.valid && username.dirty,
+                'has-danger': username.invalid && username.dirty
+              }">
+          <input type="text" class="form-control" name="username" placeholder="Username"
+                 required
+                 [(ngModel)]="user.username"
+                 #username="ngModel">
+          <div *ngIf="username.errors && username.dirty">
+            <small class="form-control-feedback" *ngIf="username.errors.required">Username is required</small>
+          </div>
+        </div>
+        <div class="form-group"
+             [ngClass]="{
+                'has-success': password.valid && password.dirty,
+                'has-danger': password.invalid && password.dirty
+              }">
+          <input type="password" class="form-control" name="password" placeholder="Password"
+                 required
+                 [(ngModel)]="user.password"
+                 #password="ngModel">
+          <div *ngIf="password.errors && password.dirty">
+            <small class="form-control-feedback" *ngIf="password.errors.required">Password is required</small>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="loginForm.form.invalid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
